@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   soc_exemple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: almounib <almounib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:03:27 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/06 18:03:27 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/07 17:34:13 by almounib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ void print_miaou(t_soc *so_this) {
 	so_this->so_return = &returnvalue;
 }
 
-t_soc *so_class_constructor(t_solib *solib, const char *soc_name, ...) {
-    return ()
-}
-
 int main(int argc, char const *argv[])
 {
 	(void)argc;
@@ -52,13 +48,13 @@ int main(int argc, char const *argv[])
 	//                                                             //
 	//   <t_solib_construct myargs_chien[];>                       //
 	// ~---------------------------------------------------------~ //
-
 	t_soc *my_chien_class = solib.classes.construct(&solib, "CHIEN",
-        INT_TYPE, "ma_value", &my_int_exemple, //creation d'un int envoie du pointeur ici *42
+		INT_TYPE, "ma_value", &my_int_exemple, //creation d'un int envoie du pointeur ici *42
         DOUBLE_TYPE, "mon_double", &my_double_exemple,//creation d'un double envoie du pointeur ici *pi
         FLOAT_TYPE, "my_health_exemple", &my_health_exemple,
         FUNC_TYPE, "func_woaf", print_woaf,//creation d'une fonction woaf contient toujours la class en argument et une valeur de retour
-        FUNC_TYPE, "func_miaou", print_miaou);//creation d'une fonction miaou contient toujours la class en argument et une valeur de retour 0 si tout vas bien > 0 si une erreur
+        FUNC_TYPE, "func_miaou", print_miaou, //creation d'une fonction miaou contient toujours la class en argument et une valeur de retour 0 si tout vas bien > 0 si une erreur
+		NULL_TYPE);
 
 
 	// ~---------------------------------------------------------~ //
@@ -115,7 +111,7 @@ int main(int argc, char const *argv[])
 	my_chien_class_copy->name = "CHIEN";
 	char *my_new_string = "500";
 	my_chien_class_copy->setvar(my_chien_class_copy, "my_health_exemple", STRING_TYPE, &my_new_string);
-	solib.classes.add(&solib, newclassadd.name, newclassadd.args);
+	solib.classes.construct(&solib, newclassadd.name, newclassadd.args);
 	so_print_classes(solib);
 
     return 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   soc.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: almounib <almounib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 22:45:49 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/04 22:45:49 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/07 16:47:53 by almounib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_solib t_solib;
 typedef struct s_soc t_soc;
 
 typedef enum {
-	VOID_TYPE,
+	NULL_TYPE,
 	CHAR_TYPE,
 	SIGNED_CHAR_TYPE,
 	UNSIGNED_CHAR_TYPE,
@@ -99,10 +99,9 @@ typedef struct s_soc{
 typedef struct s_so_classes{
     t_soc class[10];
     t_soc* (*find)(t_solib *solib, const char *soc_name);
-    t_soc* (*add)(t_solib *solib, const char *soc_name, t_soc_args* args);
     void* (*get)(t_solib *solib, const char *soc_name, const char* propName);
     void* (*remove)(t_solib *solib, const char *soc_name, const char* propName);
-    t_soc (*construct)(t_soc_args **args, int *args_size, int num_args, ...);
+    t_soc *(*construct)(t_solib *solib, const char *soc_name, ...);
 } t_so_classes;
 
 // Structure représentant solib
@@ -118,8 +117,7 @@ void			*so_class_setvar(t_soc *so_class, const char* varname, t_soc_type type, v
 t_soc			*so_add_class(t_solib *solib, const char *soc_name, t_soc_args* args);
 t_soc			*so_find_class(t_solib *solib, const char *soc_name);
 void			so_print_classes(t_solib solib);
-void			so_class_constructor(t_solib *solib, const char *soc_name, ...);
-
+t_soc			*so_class_constructor(t_solib *solib, const char *soc_name, ...);
 
 int	ft_strcmp(const char *s1, const char *s2);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);

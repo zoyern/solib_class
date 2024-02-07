@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   soc.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: almounib <almounib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:02:10 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/06 18:02:10 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/07 16:51:21 by almounib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_soc *so_find_class(t_solib *solib, const char *soc_name) {
 		}
 		i++;
 	}
-	printf("classes.find Unfind:\n==>|<%s?>|-><?> !\n\n", solib->classes.class[i].name);
+	printf("classes.find Unfind:\n\n==>|<%s?>|-><?> !\n\n", solib->classes.class[i].name);
 	return (NULL);
 }
 
@@ -59,7 +59,7 @@ void	*so_class_getvar(t_soc *so_class, const char* varname)
 		}
 		i++;
 	}
-	printf("getvar Unfind:\n==><%s>->|<%s?>| !\n\n", so_class->name, varname);
+	printf("getvar Unfind:\n\n==><%s>->|<%s?>| !\n\n", so_class->name, varname);
 	return (NULL); //non trouvé
 }
 
@@ -116,6 +116,31 @@ t_soc *so_add_class(t_solib *solib, const char *soc_name, t_soc_args* args) {
 }
 
 
+t_soc *so_class_constructor(t_solib *solib, const char *soc_name, ...) {
+	(void)solib;
+	va_list ap;
+    int i;
+	t_soc_type type;
+	char *name;
+	void *value;
+    va_start(ap, soc_name);
+	type = va_arg(ap, t_soc_type);
+	name = va_arg(ap, char *);
+	value = va_arg(ap, void *);
+    for(i=0; type != NULL_TYPE  ;i++){
+    	printf("-------------%u -- %s -- %p\n", type, name, value);
+		
+		type = va_arg(ap, t_soc_type);
+		name = va_arg(ap, char *);
+		value = va_arg(ap, void *);
+    }
+    va_end(ap);
+	t_soc *tted;
+	tted = malloc(sizeof(t_soc *));
+    return (tted);
+}
+
+
 // Fonction pour obtenir une valeur à partir de la classe dynamique par nom de class et nom de la variable
 
 
@@ -141,7 +166,7 @@ t_so_classes so_solib_classes_init() {
 		classes.class[i].args_size = 0;
 	}
     classes.find = so_find_class;
-    classes.add = so_add_class;
+    classes.construct = so_class_constructor;
     classes.get = so_get_class_value;
     return classes;
 }
